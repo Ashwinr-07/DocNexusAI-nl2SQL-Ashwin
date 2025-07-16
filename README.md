@@ -133,6 +133,10 @@ export DB_NAME="health_data_db"
 └── requirements.txt            # Python dependencies
 ```
 
+Architecture Diagram
+
+![Uploading image.png…]()
+
 ---
 
 ## Running the Application
