@@ -24,11 +24,11 @@ from query_rag import generate_sql
 PGHOST = os.getenv("PGHOST", "127.0.0.1")
 PGPORT = int(os.getenv("PGPORT", 5433))
 PGUSER = os.getenv("PGUSER", "postgres")
-PGPASSWORD = os.getenv("PGPASSWORD", "aryan2008")
+PGPASSWORD = os.getenv("PGPASSWORD", "")
 DB_NAME = os.getenv("DB_NAME", "health_data_db")
 
 # OpenAI
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = ""
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # ── Helpers ─────────────────────────────────────────────────────────
