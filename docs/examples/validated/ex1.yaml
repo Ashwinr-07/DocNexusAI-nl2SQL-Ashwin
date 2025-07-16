@@ -1,0 +1,13 @@
+id: ex1
+question: 'List the top 10 life-science firms that paid more than $5k to any HCP in
+  2018, ignoring null payment amounts.
+
+  '
+sql: "SELECT life_science_firm_name,\n       SUM(amount) AS total\nFROM   as_lsf_v1\n\
+  WHERE  year = 2018\n  AND  amount IS NOT NULL\nGROUP  BY life_science_firm_name\n\
+  HAVING SUM(amount) > 5000\nORDER  BY total DESC\nLIMIT  10;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- 2018

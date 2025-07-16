@@ -1,0 +1,13 @@
+id: ex38
+question: 'List the top 5 hospitals by number of affiliated providers.
+
+  '
+sql: "SELECT hospital,\n       COUNT(*) AS provider_count\nFROM   (\n  SELECT UNNEST(STRING_TO_ARRAY(hospital_names,\
+  \ ','))::text AS hospital\n  FROM   as_providers_v1\n  WHERE  hospital_names IS\
+  \ NOT NULL\n) AS sub\nGROUP  BY hospital\nORDER  BY provider_count DESC\nLIMIT \
+  \ 5;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- hospitals

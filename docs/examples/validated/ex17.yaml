@@ -1,0 +1,13 @@
+id: ex17
+question: 'For 2019, show the number of non-null payments per nature_of_payment category.
+
+  '
+sql: "SELECT nature_of_payment,\n       COUNT(amount) AS payment_count\nFROM   as_lsf_v1\n\
+  WHERE  year = 2019\n  AND  nature_of_payment IS NOT NULL\n  AND  amount IS NOT NULL\n\
+  GROUP  BY nature_of_payment\nORDER  BY payment_count DESC;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- 2019
+- category

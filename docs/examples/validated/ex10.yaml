@@ -1,0 +1,15 @@
+id: ex10
+question: 'Compute the average days supply for each drug class in 2024 pharmacy claims.
+
+  '
+sql: "SELECT ndc_drug_class_nm      AS drug_class,\n       AVG(days_supply_val)  \
+  \  AS avg_days_supply\nFROM   fct_pharmacy_clear_claim_allstatus_cluster_brand\n\
+  WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'\n  AND  days_supply_val\
+  \ IS NOT NULL\nGROUP  BY ndc_drug_class_nm\nORDER  BY avg_days_supply DESC\nLIMIT\
+  \  5;\n"
+tables:
+- fct_pharmacy_clear_claim_allstatus_cluster_brand
+tags:
+- pharmacy
+- adherence
+- 2024

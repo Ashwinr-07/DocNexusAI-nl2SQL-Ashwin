@@ -1,0 +1,12 @@
+id: ex50
+question: 'Which 5 healthcare providers have the longest biographies?
+
+  '
+sql: "SELECT npi,\n       name,\n       char_length(biography) AS bio_length\nFROM\
+  \   mf_providers\nWHERE  biography IS NOT NULL\nORDER  BY bio_length DESC\nLIMIT\
+  \  5;\n"
+tables:
+- mf_providers
+tags:
+- providers
+- biography

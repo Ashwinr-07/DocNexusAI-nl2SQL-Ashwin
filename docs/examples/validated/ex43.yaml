@@ -1,0 +1,12 @@
+id: ex43
+question: 'What are the top 5 procedure codes by total patient count?
+
+  '
+sql: "SELECT procedure_code,\n       SUM(patient_count) AS total_patients\nFROM  \
+  \ as_providers_referrals_v2\nWHERE  procedure_code IS NOT NULL\n  AND  patient_count\
+  \ IS NOT NULL\nGROUP  BY procedure_code\nORDER  BY total_patients DESC\nLIMIT  5;\n"
+tables:
+- as_providers_referrals_v2
+tags:
+- referrals
+- procedure

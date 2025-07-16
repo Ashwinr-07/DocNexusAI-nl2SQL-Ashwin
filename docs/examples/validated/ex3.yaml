@@ -1,0 +1,15 @@
+id: ex3
+question: 'Which 10 providers received the highest total payments in 2022?
+
+  '
+sql: "SELECT p.first_name || ' ' || p.last_name AS provider,\n       SUM(l.amount)\
+  \                   AS total_paid\nFROM   as_lsf_v1                    AS l\nJOIN\
+  \   as_providers_v1              AS p\n  ON   l.type_1_npi = p.type_1_npi\nWHERE\
+  \  l.year = 2022\n  AND  l.amount IS NOT NULL\n  AND  p.first_name IS NOT NULL\n\
+  GROUP  BY provider\nORDER  BY total_paid DESC\nLIMIT  10;\n"
+tables:
+- as_lsf_v1
+- as_providers_v1
+tags:
+- payments
+- 2022

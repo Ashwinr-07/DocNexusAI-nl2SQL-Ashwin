@@ -1,0 +1,11 @@
+ICD-10: International Classification of Diseases, 10th Revision — standard diagnostic codes
+CPT: Current Procedural Terminology — used to describe procedures and services
+HCP: Healthcare Professional — includes doctors, specialists, NPs
+HCO: Healthcare Organization — hospitals, health systems, clinics, ASCs
+Claim: A record of a billed interaction between a patient and provider
+Patient: The individual receiving treatment or services
+Procedure: A medical operation or clinical service performed
+Drug: A prescribed or administered pharmaceutical product
+Therapy Area: The medical area or specialty the product/procedure targets
+KOL: Key Opinion Leader — highly influential HCPs
+Trial: A registered clinical study used to evaluate drugs/devices

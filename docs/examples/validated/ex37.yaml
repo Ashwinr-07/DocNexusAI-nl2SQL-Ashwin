@@ -1,0 +1,11 @@
+id: ex37
+question: 'Count the number of non-null payments per year.
+
+  '
+sql: "SELECT year,\n       COUNT(amount) AS payment_count\nFROM   as_lsf_v1\nWHERE\
+  \  amount IS NOT NULL\nGROUP  BY year\nORDER  BY year;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- time

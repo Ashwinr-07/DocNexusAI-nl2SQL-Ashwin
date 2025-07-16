@@ -1,0 +1,11 @@
+id: ex28
+question: "List providers whose recorded conditions include \u201CDiabetes\u201D.\n"
+sql: "SELECT type_1_npi,\n       first_name || ' ' || last_name AS provider_name,\n\
+  \       conditions\nFROM   as_providers_v1\nWHERE  conditions ILIKE '%Diabetes%'\n\
+  \  AND  conditions IS NOT NULL\nORDER  BY provider_name\nLIMIT  10;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- conditions
+- diabetes

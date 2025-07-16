@@ -1,0 +1,11 @@
+id: ex16
+question: 'Show the top 20 score entries with score > 50.
+
+  '
+sql: "SELECT id,\n       mf_providers_npi,\n       score\nFROM   mf_scores\nWHERE\
+  \  score > 50\n  AND  score IS NOT NULL\nORDER  BY score DESC\nLIMIT  20;\n"
+tables:
+- mf_scores
+tags:
+- scores
+- high

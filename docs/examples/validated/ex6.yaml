@@ -1,0 +1,13 @@
+id: ex6
+question: 'Give monthly totals of all referrals for 2023.
+
+  '
+sql: "SELECT DATE_TRUNC('month', date) AS month,\n       COUNT(*)                \
+  \  AS referral_ct\nFROM   as_providers_referrals_v2\nWHERE  date BETWEEN '2023-01-01'\
+  \ AND '2023-12-31'\n  AND  date IS NOT NULL\nGROUP  BY month\nORDER  BY month;\n"
+tables:
+- as_providers_referrals_v2
+tags:
+- referrals
+- 2023
+- monthly

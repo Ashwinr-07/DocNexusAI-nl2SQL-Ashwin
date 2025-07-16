@@ -1,0 +1,13 @@
+id: ex2
+question: 'Show the total amount paid by each firm in 2020 (descending order), ignoring
+  nulls.
+
+  '
+sql: "SELECT life_science_firm_name,\n       SUM(amount) AS total_paid\nFROM   as_lsf_v1\n\
+  WHERE  year = 2020\n  AND  amount IS NOT NULL\nGROUP  BY life_science_firm_name\n\
+  ORDER  BY total_paid DESC;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- 2020

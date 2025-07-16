@@ -1,0 +1,17 @@
+id: ex42
+question: 'Which 5 providers received the most referrals in 2023?
+
+  '
+sql: "SELECT p.first_name || ' ' || p.last_name AS provider,\n       COUNT(*)    \
+  \                     AS referrals_received\nFROM   as_providers_referrals_v2 AS\
+  \ r\nJOIN   as_providers_v1           AS p\n  ON   r.referring_type_1_npi = p.type_1_npi\n\
+  WHERE  r.date BETWEEN '2023-01-01' AND '2023-12-31'\n  AND  r.referring_type_1_npi\
+  \ IS NOT NULL\n  AND  p.first_name IS NOT NULL\nGROUP  BY provider\nORDER  BY referrals_received\
+  \ DESC\nLIMIT  5;\n"
+tables:
+- as_providers_referrals_v2
+- as_providers_v1
+tags:
+- referrals
+- providers
+- 2023

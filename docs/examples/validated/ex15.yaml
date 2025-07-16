@@ -1,0 +1,14 @@
+id: ex15
+question: 'Which conditions have the highest average provider score (min 5 providers)?
+
+  '
+sql: "SELECT c.display         AS condition,\n       AVG(s.score)      AS avg_score,\n\
+  \       COUNT(*)          AS num_providers\nFROM   mf_scores     AS s\nJOIN   mf_conditions\
+  \ AS c\n  ON   s.mf_conditions_projectid = c.projectid\nWHERE  s.score IS NOT NULL\n\
+  GROUP  BY condition\nHAVING COUNT(*) >= 5\nORDER  BY avg_score DESC\nLIMIT  10;\n"
+tables:
+- mf_scores
+- mf_conditions
+tags:
+- scores
+- conditions

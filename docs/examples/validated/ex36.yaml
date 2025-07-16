@@ -1,0 +1,12 @@
+id: ex36
+question: 'List the top 5 products by number of payments across all years.
+
+  '
+sql: "SELECT product_name,\n       COUNT(*) AS payment_count\nFROM   as_lsf_v1\nWHERE\
+  \  product_name IS NOT NULL\nGROUP  BY product_name\nORDER  BY payment_count DESC\n\
+  LIMIT  5;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- products

@@ -1,0 +1,15 @@
+id: ex47
+question: 'Show monthly counts of pharmacy claims by transaction status in 2024.
+
+  '
+sql: "SELECT TO_CHAR(service_date_dd, 'YYYY-MM') AS month,\n       transaction_status_nm\
+  \               AS status,\n       COUNT(*)                            AS count\n\
+  FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand\nWHERE  service_date_dd\
+  \ BETWEEN '2024-01-01' AND '2024-12-31'\n  AND  transaction_status_nm IS NOT NULL\n\
+  GROUP  BY month, status\nORDER  BY month, count DESC\nLIMIT  10;\n"
+tables:
+- fct_pharmacy_clear_claim_allstatus_cluster_brand
+tags:
+- pharmacy
+- monthly
+- status

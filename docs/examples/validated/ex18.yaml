@@ -1,0 +1,15 @@
+id: ex18
+question: 'What was the average payment amount per product for TEVA PHARMACEUTICALS
+  USA, INC. in 2020?
+
+  '
+sql: "SELECT product_name,\n       AVG(amount) AS avg_amount\nFROM   as_lsf_v1\nWHERE\
+  \  life_science_firm_name = 'TEVA PHARMACEUTICALS USA, INC.'\n  AND  year = 2020\n\
+  \  AND  amount IS NOT NULL\nGROUP  BY product_name\nORDER  BY avg_amount DESC;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- product
+- TEVA
+- 2020

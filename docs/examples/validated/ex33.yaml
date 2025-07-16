@@ -1,0 +1,15 @@
+id: ex33
+question: 'Which conditions have the most unique providers associated?
+
+  '
+sql: "SELECT c.display             AS condition,\n       COUNT(DISTINCT s.mf_providers_npi)\
+  \ AS provider_count\nFROM   mf_scores     AS s\nJOIN   mf_conditions AS c\n  ON\
+  \   s.mf_conditions_projectid = c.projectid\nWHERE  s.mf_providers_npi IS NOT NULL\n\
+  GROUP  BY condition\nORDER  BY provider_count DESC\nLIMIT  10;\n"
+tables:
+- mf_scores
+- mf_conditions
+tags:
+- conditions
+- providers
+- diversity

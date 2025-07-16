@@ -1,0 +1,13 @@
+id: ex14
+question: 'Providers who graduated after 2010 and have at least 5 highly-rated conditions.
+
+  '
+sql: "SELECT npi,\n       name,\n       gradinstitution_year AS grad_year,\n     \
+  \  highlyratedconditionscount\nFROM   mf_providers\nWHERE  gradinstitution_year\
+  \ > 2010\n  AND  highlyratedconditionscount >= 5\n  AND  gradinstitution_year IS\
+  \ NOT NULL\nORDER  BY highlyratedconditionscount DESC;\n"
+tables:
+- mf_providers
+tags:
+- providers
+- recent_grads

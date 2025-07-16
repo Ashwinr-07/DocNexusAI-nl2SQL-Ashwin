@@ -1,0 +1,14 @@
+id: ex29
+question: 'In 2022, what are the top 5 referring specialties to Cardiology?
+
+  '
+sql: "SELECT referring_specialty,\n       COUNT(*) AS referral_count\nFROM   as_providers_referrals_v2\n\
+  WHERE  primary_specialty = 'Cardiology'\n  AND  date BETWEEN '2022-01-01' AND '2022-12-31'\n\
+  \  AND  referring_specialty IS NOT NULL\nGROUP  BY referring_specialty\nORDER  BY\
+  \ referral_count DESC\nLIMIT  5;\n"
+tables:
+- as_providers_referrals_v2
+tags:
+- referrals
+- specialty
+- 2022

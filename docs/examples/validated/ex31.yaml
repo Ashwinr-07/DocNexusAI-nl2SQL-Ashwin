@@ -1,0 +1,14 @@
+id: ex31
+question: 'Which 5 drugs had the highest total dispensed quantity in 2024?
+
+  '
+sql: "SELECT ndc_drug_nm,\n       SUM(dispensed_quantity_val) AS total_dispensed\n\
+  FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand\nWHERE  service_date_dd\
+  \ BETWEEN '2024-01-01' AND '2024-12-31'\n  AND  dispensed_quantity_val IS NOT NULL\n\
+  GROUP  BY ndc_drug_nm\nORDER  BY total_dispensed DESC\nLIMIT  5;\n"
+tables:
+- fct_pharmacy_clear_claim_allstatus_cluster_brand
+tags:
+- pharmacy
+- drugs
+- 2024

@@ -1,0 +1,13 @@
+id: ex45
+question: 'List providers who are missing an email address.
+
+  '
+sql: "SELECT type_1_npi,\n       first_name || ' ' || last_name AS provider\nFROM\
+  \   as_providers_v1\nWHERE  email IS NULL\n  AND  first_name IS NOT NULL\nORDER\
+  \  BY provider\nLIMIT  10;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- missing
+- contact

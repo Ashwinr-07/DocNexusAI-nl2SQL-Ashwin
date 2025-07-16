@@ -1,0 +1,14 @@
+id: ex34
+question: 'List providers with more than 3 affiliated systems.
+
+  '
+sql: "SELECT type_1_npi,\n       first_name || ' ' || last_name AS provider_name,\n\
+  \       array_length(string_to_array(system_names, ','),1) AS system_count\nFROM\
+  \   as_providers_v1\nWHERE  system_names IS NOT NULL\n  AND  array_length(string_to_array(system_names,\
+  \ ','),1) > 3\nORDER  BY system_count DESC\nLIMIT  10;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- systems
+- affiliation

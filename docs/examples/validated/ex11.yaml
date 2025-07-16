@@ -1,0 +1,11 @@
+id: ex11
+question: 'List the 10 conditions with the largest clinical trial size.
+
+  '
+sql: "SELECT display,\n       tcsize\nFROM   mf_conditions\nWHERE  tcsize IS NOT NULL\n\
+  ORDER  BY tcsize DESC\nLIMIT  10;\n"
+tables:
+- mf_conditions
+tags:
+- conditions
+- size

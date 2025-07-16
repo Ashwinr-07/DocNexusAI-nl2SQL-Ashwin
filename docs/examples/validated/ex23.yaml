@@ -1,0 +1,12 @@
+id: ex23
+question: 'List all providers who have a Twitter handle.
+
+  '
+sql: "SELECT type_1_npi,\n       first_name || ' ' || last_name AS provider,\n   \
+  \    twitter\nFROM   as_providers_v1\nWHERE  twitter IS NOT NULL\n  AND  first_name\
+  \ IS NOT NULL\nORDER  BY provider;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- social_media

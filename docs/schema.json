@@ -1,0 +1,770 @@
+{
+  "as_lsf_v1": [
+    {
+      "name": "type_1_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "life_science_firm_name",
+      "type": "text"
+    },
+    {
+      "name": "product_name",
+      "type": "text"
+    },
+    {
+      "name": "nature_of_payment",
+      "type": "text"
+    },
+    {
+      "name": "year",
+      "type": "integer"
+    },
+    {
+      "name": "amount",
+      "type": "real"
+    }
+  ],
+  "as_providers_referrals_v2": [
+    {
+      "name": "primary_type_2_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "referring_type_2_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "primary_type_2_npi_city",
+      "type": "text"
+    },
+    {
+      "name": "referring_type_2_npi_city",
+      "type": "text"
+    },
+    {
+      "name": "primary_type_2_npi_state",
+      "type": "text"
+    },
+    {
+      "name": "referring_type_2_npi_state",
+      "type": "text"
+    },
+    {
+      "name": "primary_type_2_npi_postal_code",
+      "type": "text"
+    },
+    {
+      "name": "referring_type_2_npi_postal_code",
+      "type": "text"
+    },
+    {
+      "name": "primary_type_2_npi_lat",
+      "type": "double precision"
+    },
+    {
+      "name": "referring_type_2_npi_lat",
+      "type": "double precision"
+    },
+    {
+      "name": "primary_type_2_npi_lng",
+      "type": "double precision"
+    },
+    {
+      "name": "referring_type_2_npi_lng",
+      "type": "double precision"
+    },
+    {
+      "name": "primary_type_2_npi_name",
+      "type": "text"
+    },
+    {
+      "name": "referring_type_2_npi_name",
+      "type": "text"
+    },
+    {
+      "name": "primary_hospital_name",
+      "type": "text"
+    },
+    {
+      "name": "referring_hospital_name",
+      "type": "text"
+    },
+    {
+      "name": "primary_type_1_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "referring_type_1_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "primary_type_1_npi_name",
+      "type": "text"
+    },
+    {
+      "name": "referring_type_1_npi_name",
+      "type": "text"
+    },
+    {
+      "name": "primary_specialty",
+      "type": "text"
+    },
+    {
+      "name": "referring_specialty",
+      "type": "text"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    },
+    {
+      "name": "diagnosis_code",
+      "type": "text"
+    },
+    {
+      "name": "diagnosis_code_description",
+      "type": "text"
+    },
+    {
+      "name": "procedure_code",
+      "type": "text"
+    },
+    {
+      "name": "procedure_code_description",
+      "type": "text"
+    },
+    {
+      "name": "total_claim_charge",
+      "type": "double precision"
+    },
+    {
+      "name": "total_claim_line_charge",
+      "type": "double precision"
+    },
+    {
+      "name": "patient_count",
+      "type": "bigint"
+    }
+  ],
+  "as_providers_v1": [
+    {
+      "name": "type_1_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "type_2_npi_names",
+      "type": "text"
+    },
+    {
+      "name": "type_2_npis",
+      "type": "text"
+    },
+    {
+      "name": "first_name",
+      "type": "text"
+    },
+    {
+      "name": "middle_name",
+      "type": "text"
+    },
+    {
+      "name": "last_name",
+      "type": "text"
+    },
+    {
+      "name": "gender",
+      "type": "character varying"
+    },
+    {
+      "name": "specialties",
+      "type": "text"
+    },
+    {
+      "name": "conditions_tags",
+      "type": "text"
+    },
+    {
+      "name": "conditions",
+      "type": "text"
+    },
+    {
+      "name": "cities",
+      "type": "text"
+    },
+    {
+      "name": "states",
+      "type": "text"
+    },
+    {
+      "name": "counties",
+      "type": "text"
+    },
+    {
+      "name": "city_states",
+      "type": "text"
+    },
+    {
+      "name": "hospital_names",
+      "type": "text"
+    },
+    {
+      "name": "system_names",
+      "type": "text"
+    },
+    {
+      "name": "affiliations",
+      "type": "text"
+    },
+    {
+      "name": "best_type_2_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "best_hospital_name",
+      "type": "text"
+    },
+    {
+      "name": "best_system_name",
+      "type": "text"
+    },
+    {
+      "name": "phone",
+      "type": "text"
+    },
+    {
+      "name": "email",
+      "type": "text"
+    },
+    {
+      "name": "linkedin",
+      "type": "text"
+    },
+    {
+      "name": "twitter",
+      "type": "text"
+    }
+  ],
+  "diagnosis_and_procedures": [
+    {
+      "name": "patient_id",
+      "type": "text"
+    },
+    {
+      "name": "claim_nbr",
+      "type": "text"
+    },
+    {
+      "name": "claim_type_cd",
+      "type": "text"
+    },
+    {
+      "name": "claim_category",
+      "type": "text"
+    },
+    {
+      "name": "statement_from_dd",
+      "type": "date"
+    },
+    {
+      "name": "primary_hco",
+      "type": "text"
+    },
+    {
+      "name": "primary_hco_name",
+      "type": "text"
+    },
+    {
+      "name": "primary_hco_provider_classification",
+      "type": "text"
+    },
+    {
+      "name": "primary_hcp",
+      "type": "text"
+    },
+    {
+      "name": "primary_hcp_source",
+      "type": "text"
+    },
+    {
+      "name": "primary_hcp_name",
+      "type": "text"
+    },
+    {
+      "name": "primary_hcp_segment",
+      "type": "text"
+    },
+    {
+      "name": "referring_npi_nbr",
+      "type": "text"
+    },
+    {
+      "name": "referring_npi_nm",
+      "type": "text"
+    },
+    {
+      "name": "payer_1_id",
+      "type": "text"
+    },
+    {
+      "name": "payer_1_name",
+      "type": "text"
+    },
+    {
+      "name": "payer_1_subchannel_name",
+      "type": "text"
+    },
+    {
+      "name": "payer_1_channel_name",
+      "type": "text"
+    },
+    {
+      "name": "claim_charge_amt",
+      "type": "double precision"
+    },
+    {
+      "name": "principal_diagnosis_cd",
+      "type": "text"
+    },
+    {
+      "name": "principal_diagnosis_vocabulary_id",
+      "type": "text"
+    },
+    {
+      "name": "principal_diagnosis_desc",
+      "type": "text"
+    },
+    {
+      "name": "header_anchor_dd",
+      "type": "date"
+    },
+    {
+      "name": "service_from_dd",
+      "type": "date"
+    },
+    {
+      "name": "rendering_provider_npi_nbr",
+      "type": "text"
+    },
+    {
+      "name": "rendering_provider_nm",
+      "type": "text"
+    },
+    {
+      "name": "rendering_provider_classtype",
+      "type": "text"
+    },
+    {
+      "name": "rendering_provider_segment",
+      "type": "text"
+    },
+    {
+      "name": "rendering_provider_zip",
+      "type": "text"
+    },
+    {
+      "name": "rendering_provider_state",
+      "type": "text"
+    },
+    {
+      "name": "revenue_cd",
+      "type": "text"
+    },
+    {
+      "name": "procedure_cd",
+      "type": "text"
+    },
+    {
+      "name": "procedure_vocabulary_id",
+      "type": "text"
+    },
+    {
+      "name": "procedure_code_desc",
+      "type": "text"
+    },
+    {
+      "name": "procedure_modifier_1_cd",
+      "type": "text"
+    },
+    {
+      "name": "procedure_modifier_1_desc",
+      "type": "text"
+    },
+    {
+      "name": "ndc",
+      "type": "text"
+    },
+    {
+      "name": "claim_line_charge_amt",
+      "type": "double precision"
+    },
+    {
+      "name": "days_or_units_val",
+      "type": "double precision"
+    },
+    {
+      "name": "version",
+      "type": "text"
+    }
+  ],
+  "fct_pharmacy_clear_claim_allstatus_cluster_brand": [
+    {
+      "name": "rx_anchor_dd",
+      "type": "date"
+    },
+    {
+      "name": "rx_claim_nbr",
+      "type": "text"
+    },
+    {
+      "name": "patient_id",
+      "type": "text"
+    },
+    {
+      "name": "service_date_dd",
+      "type": "date"
+    },
+    {
+      "name": "transaction_status_nm",
+      "type": "text"
+    },
+    {
+      "name": "reject_reason_1_cd",
+      "type": "text"
+    },
+    {
+      "name": "reject_reason_1_desc",
+      "type": "text"
+    },
+    {
+      "name": "ndc",
+      "type": "text"
+    },
+    {
+      "name": "ndc_desc",
+      "type": "text"
+    },
+    {
+      "name": "ndc_generic_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_preferred_brand_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_dosage_form_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_drug_form_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_drug_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_drug_subclass_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_drug_class_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_drug_group_nm",
+      "type": "text"
+    },
+    {
+      "name": "ndc_isbranded_ind",
+      "type": "text"
+    },
+    {
+      "name": "prescribed_ndc",
+      "type": "text"
+    },
+    {
+      "name": "diagnosis_cd",
+      "type": "text"
+    },
+    {
+      "name": "daw_cd",
+      "type": "bigint"
+    },
+    {
+      "name": "unit_of_measurement_cd",
+      "type": "text"
+    },
+    {
+      "name": "prescriber_nbr_qual_cd",
+      "type": "text"
+    },
+    {
+      "name": "prescriber_npi_nbr",
+      "type": "text"
+    },
+    {
+      "name": "prescriber_npi_nm",
+      "type": "text"
+    },
+    {
+      "name": "prescriber_npi_entity_cd",
+      "type": "bigint"
+    },
+    {
+      "name": "prescriber_npi_hco_class_of_trade_desc",
+      "type": "text"
+    },
+    {
+      "name": "prescriber_npi_hcp_segment_desc",
+      "type": "text"
+    },
+    {
+      "name": "prescriber_npi_state_cd",
+      "type": "text"
+    },
+    {
+      "name": "prescriber_npi_zip5_cd",
+      "type": "text"
+    },
+    {
+      "name": "payer_id",
+      "type": "bigint"
+    },
+    {
+      "name": "payer_payer_nm",
+      "type": "text"
+    },
+    {
+      "name": "payer_cob_seq_val",
+      "type": "bigint"
+    },
+    {
+      "name": "payer_plan_subchannel_cd",
+      "type": "text"
+    },
+    {
+      "name": "payer_plan_subchannel_nm",
+      "type": "text"
+    },
+    {
+      "name": "payer_plan_channel_cd",
+      "type": "text"
+    },
+    {
+      "name": "payer_plan_channel_nm",
+      "type": "text"
+    },
+    {
+      "name": "payer_company_nm",
+      "type": "text"
+    },
+    {
+      "name": "payer_mco_issuer_id",
+      "type": "text"
+    },
+    {
+      "name": "payer_mco_issuer_nm",
+      "type": "text"
+    },
+    {
+      "name": "payer_bin_nbr",
+      "type": "text"
+    },
+    {
+      "name": "payer_pcn_nbr",
+      "type": "text"
+    },
+    {
+      "name": "payer_group_str",
+      "type": "text"
+    },
+    {
+      "name": "fill_number_val",
+      "type": "bigint"
+    },
+    {
+      "name": "dispensed_quantity_val",
+      "type": "numeric"
+    },
+    {
+      "name": "prescribed_quantity_val",
+      "type": "numeric"
+    },
+    {
+      "name": "days_supply_val",
+      "type": "numeric"
+    },
+    {
+      "name": "number_of_refills_authorized_val",
+      "type": "bigint"
+    },
+    {
+      "name": "gross_due_amt",
+      "type": "numeric"
+    },
+    {
+      "name": "total_paid_amt",
+      "type": "numeric"
+    },
+    {
+      "name": "patient_to_pay_amt",
+      "type": "numeric"
+    },
+    {
+      "name": "awp_unit_price_amt",
+      "type": "double precision"
+    },
+    {
+      "name": "awp_calc_amt",
+      "type": "double precision"
+    }
+  ],
+  "mf_conditions": [
+    {
+      "name": "projectid",
+      "type": "integer"
+    },
+    {
+      "name": "display",
+      "type": "text"
+    },
+    {
+      "name": "codingtype",
+      "type": "text"
+    },
+    {
+      "name": "tcsize",
+      "type": "integer"
+    }
+  ],
+  "mf_providers": [
+    {
+      "name": "npi",
+      "type": "bigint"
+    },
+    {
+      "name": "docid",
+      "type": "text"
+    },
+    {
+      "name": "personid",
+      "type": "integer"
+    },
+    {
+      "name": "name",
+      "type": "text"
+    },
+    {
+      "name": "displayname",
+      "type": "text"
+    },
+    {
+      "name": "initials",
+      "type": "text"
+    },
+    {
+      "name": "familyname",
+      "type": "text"
+    },
+    {
+      "name": "score",
+      "type": "real"
+    },
+    {
+      "name": "phone",
+      "type": "text"
+    },
+    {
+      "name": "isusprescriber",
+      "type": "boolean"
+    },
+    {
+      "name": "sex",
+      "type": "character varying"
+    },
+    {
+      "name": "image",
+      "type": "text"
+    },
+    {
+      "name": "primaryorgname",
+      "type": "text"
+    },
+    {
+      "name": "primaryorgwebsite",
+      "type": "text"
+    },
+    {
+      "name": "highlyratedconditionscount",
+      "type": "integer"
+    },
+    {
+      "name": "orglogo",
+      "type": "text"
+    },
+    {
+      "name": "orgwebsite",
+      "type": "text"
+    },
+    {
+      "name": "healthsystem_website",
+      "type": "text"
+    },
+    {
+      "name": "healthsystem_name",
+      "type": "text"
+    },
+    {
+      "name": "codingcount",
+      "type": "integer"
+    },
+    {
+      "name": "biography",
+      "type": "text"
+    },
+    {
+      "name": "gradinstitution_year",
+      "type": "integer"
+    },
+    {
+      "name": "gradinstitution_gradyearnumber",
+      "type": "integer"
+    },
+    {
+      "name": "gradinstitution_name",
+      "type": "text"
+    },
+    {
+      "name": "traininginstitution_year",
+      "type": "integer"
+    },
+    {
+      "name": "traininginstitution_gradyearnumber",
+      "type": "integer"
+    },
+    {
+      "name": "traininginstitution_name",
+      "type": "text"
+    }
+  ],
+  "mf_scores": [
+    {
+      "name": "id",
+      "type": "integer"
+    },
+    {
+      "name": "score",
+      "type": "real"
+    },
+    {
+      "name": "mf_providers_npi",
+      "type": "bigint"
+    },
+    {
+      "name": "mf_conditions_projectid",
+      "type": "integer"
+    }
+  ]
+}

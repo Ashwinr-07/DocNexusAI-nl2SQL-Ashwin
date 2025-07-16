@@ -1,0 +1,12 @@
+id: ex49
+question: 'For each condition coding type, show how many entries have null display
+  values.
+
+  '
+sql: "SELECT codingtype,\n       COUNT(*) FILTER (WHERE display IS NULL) AS missing_display\n\
+  FROM   mf_conditions\nGROUP  BY codingtype;\n"
+tables:
+- mf_conditions
+tags:
+- conditions
+- missing

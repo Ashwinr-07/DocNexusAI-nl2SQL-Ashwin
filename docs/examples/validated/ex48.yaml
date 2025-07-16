@@ -1,0 +1,13 @@
+id: ex48
+question: 'Identify the top 5 referrals with the largest total_claim_line_charge.
+
+  '
+sql: "SELECT primary_specialty,\n       referring_specialty,\n       total_claim_line_charge\n\
+  FROM   as_providers_referrals_v2\nWHERE  total_claim_line_charge IS NOT NULL\n \
+  \ AND  primary_specialty IS NOT NULL\n  AND  referring_specialty IS NOT NULL\nORDER\
+  \  BY total_claim_line_charge DESC\nLIMIT  5;\n"
+tables:
+- as_providers_referrals_v2
+tags:
+- referrals
+- cost

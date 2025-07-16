@@ -1,0 +1,13 @@
+id: ex4
+question: 'List the top 5 specialties by number of providers.
+
+  '
+sql: "WITH split AS (\n  SELECT TRIM(s) AS specialty\n  FROM   as_providers_v1,\n\
+  \         UNNEST(STRING_TO_ARRAY(specialties, ',')) AS s\n  WHERE  specialties IS\
+  \ NOT NULL\n)\nSELECT specialty,\n       COUNT(*)      AS provider_count\nFROM \
+  \  split\nGROUP  BY specialty\nORDER  BY provider_count DESC\nLIMIT  5;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- specialties

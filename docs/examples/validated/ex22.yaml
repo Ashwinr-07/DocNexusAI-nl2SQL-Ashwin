@@ -1,0 +1,14 @@
+id: ex22
+question: 'Show the top 5 payers by total amount paid in 2024 pharmacy claims.
+
+  '
+sql: "SELECT payer_payer_nm AS payer,\n       SUM(total_paid_amt) AS total_paid\n\
+  FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand\nWHERE  service_date_dd\
+  \ BETWEEN '2024-01-01' AND '2024-12-31'\n  AND  total_paid_amt IS NOT NULL\nGROUP\
+  \  BY payer_payer_nm\nORDER  BY total_paid DESC\nLIMIT  5;\n"
+tables:
+- fct_pharmacy_clear_claim_allstatus_cluster_brand
+tags:
+- pharmacy
+- payers
+- 2024

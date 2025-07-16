@@ -1,0 +1,14 @@
+id: ex30
+question: 'Compute average claim charge per month for 2023.
+
+  '
+sql: "SELECT TO_CHAR(service_from_dd, 'YYYY-MM') AS month,\n       AVG(claim_charge_amt)\
+  \            AS avg_charge\nFROM   diagnosis_and_procedures\nWHERE  service_from_dd\
+  \ BETWEEN '2023-01-01' AND '2023-12-31'\n  AND  claim_charge_amt IS NOT NULL\nGROUP\
+  \  BY month\nORDER  BY month;\n"
+tables:
+- diagnosis_and_procedures
+tags:
+- diagnosis
+- monthly
+- 2023

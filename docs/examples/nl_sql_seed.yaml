@@ -1,0 +1,829 @@
+# ---------- NL ↔ SQL seed examples (34 total) -----------------------
+
+# === TABLE 1 : as_lsf_v1 ============================================
+- id: ex1
+  question: >
+    List the top 10 life-science firms that paid more than $5k to any HCP in 2018, ignoring null payment amounts.
+  sql: |
+    SELECT life_science_firm_name,
+           SUM(amount) AS total
+    FROM   as_lsf_v1
+    WHERE  year = 2018
+      AND  amount IS NOT NULL
+    GROUP  BY life_science_firm_name
+    HAVING SUM(amount) > 5000
+    ORDER  BY total DESC
+    LIMIT  10;
+  tables: [as_lsf_v1]
+  tags:   [payments, 2018]
+
+- id: ex2
+  question: >
+    Show the total amount paid by each firm in 2020 (descending order), ignoring nulls.
+  sql: |
+    SELECT life_science_firm_name,
+           SUM(amount) AS total_paid
+    FROM   as_lsf_v1
+    WHERE  year = 2020
+      AND  amount IS NOT NULL
+    GROUP  BY life_science_firm_name
+    ORDER  BY total_paid DESC;
+  tables: [as_lsf_v1]
+  tags:   [payments, 2020]
+
+- id: ex17
+  question: >
+    For 2019, show the number of non-null payments per nature_of_payment category.
+  sql: |
+    SELECT nature_of_payment,
+           COUNT(amount) AS payment_count
+    FROM   as_lsf_v1
+    WHERE  year = 2019
+      AND  nature_of_payment IS NOT NULL
+      AND  amount IS NOT NULL
+    GROUP  BY nature_of_payment
+    ORDER  BY payment_count DESC;
+  tables: [as_lsf_v1]
+  tags:   [payments, 2019, category]
+
+- id: ex18
+  question: >
+    What was the average payment amount per product for TEVA PHARMACEUTICALS USA, INC. in 2020?
+  sql: |
+    SELECT product_name,
+           AVG(amount) AS avg_amount
+    FROM   as_lsf_v1
+    WHERE  life_science_firm_name = 'TEVA PHARMACEUTICALS USA, INC.'
+      AND  year = 2020
+      AND  amount IS NOT NULL
+    GROUP  BY product_name
+    ORDER  BY avg_amount DESC;
+  tables: [as_lsf_v1]
+  tags:   [payments, product, TEVA, 2020]
+
+- id: ex19
+  question: >
+    List the top 5 HCPs by number of distinct products they received payments for in 2021.
+  sql: |
+    SELECT type_1_npi,
+           COUNT(DISTINCT product_name) AS product_variety
+    FROM   as_lsf_v1
+    WHERE  year = 2021
+      AND  product_name IS NOT NULL
+    GROUP  BY type_1_npi
+    ORDER  BY product_variety DESC
+    LIMIT  5;
+  tables: [as_lsf_v1]
+  tags:   [payments, HCP, diversity, 2021]
+
+- id: ex27
+  question: >
+    For each life-science firm, how many distinct HCPs did they pay in 2019?
+  sql: |
+    SELECT life_science_firm_name,
+           COUNT(DISTINCT type_1_npi) AS num_hcps
+    FROM   as_lsf_v1
+    WHERE  year = 2019
+      AND  type_1_npi IS NOT NULL
+    GROUP  BY life_science_firm_name
+    ORDER  BY num_hcps DESC
+    LIMIT  10;
+  tables: [as_lsf_v1]
+  tags:   [payments, 2019, distinct]
+
+# === TABLE 2 : as_providers_v1 ======================================
+
+- id: ex3
+  question: >
+    Which 10 providers received the highest total payments in 2022?
+  sql: |
+    SELECT p.first_name || ' ' || p.last_name AS provider,
+           SUM(l.amount)                   AS total_paid
+    FROM   as_lsf_v1                    AS l
+    JOIN   as_providers_v1              AS p
+      ON   l.type_1_npi = p.type_1_npi
+    WHERE  l.year = 2022
+      AND  l.amount IS NOT NULL
+      AND  p.first_name IS NOT NULL
+    GROUP  BY provider
+    ORDER  BY total_paid DESC
+    LIMIT  10;
+  tables: [as_lsf_v1, as_providers_v1]
+  tags:   [payments, 2022]
+
+- id: ex4
+  question: >
+    List the top 5 specialties by number of providers.
+  sql: |
+    WITH split AS (
+      SELECT TRIM(s) AS specialty
+      FROM   as_providers_v1,
+             UNNEST(STRING_TO_ARRAY(specialties, ',')) AS s
+      WHERE  specialties IS NOT NULL
+    )
+    SELECT specialty,
+           COUNT(*)      AS provider_count
+    FROM   split
+    GROUP  BY specialty
+    ORDER  BY provider_count DESC
+    LIMIT  5;
+  tables: [as_providers_v1]
+  tags:   [providers, specialties]
+
+- id: ex23
+  question: >
+    List all providers who have a Twitter handle.
+  sql: |
+    SELECT type_1_npi,
+           first_name || ' ' || last_name AS provider,
+           twitter
+    FROM   as_providers_v1
+    WHERE  twitter IS NOT NULL
+      AND  first_name IS NOT NULL
+    ORDER  BY provider;
+  tables: [as_providers_v1]
+  tags:   [providers, social_media]
+
+- id: ex24
+  question: >
+    Count the number of providers by gender.
+  sql: |
+    SELECT gender,
+           COUNT(*) AS count
+    FROM   as_providers_v1
+    WHERE  gender IS NOT NULL
+    GROUP  BY gender
+    ORDER  BY count DESC;
+  tables: [as_providers_v1]
+  tags:   [providers, demographics]
+
+- id: ex25
+  question: >
+    Which 5 U.S. states have the most registered providers?
+  sql: |
+    SELECT state,
+           COUNT(*) AS provider_count
+    FROM   (
+      SELECT TRIM(s) AS state
+      FROM   as_providers_v1,
+             UNNEST(STRING_TO_ARRAY(states, ',')) AS s
+      WHERE  states IS NOT NULL
+    ) AS sub
+    GROUP  BY state
+    ORDER  BY provider_count DESC
+    LIMIT  5;
+  tables: [as_providers_v1]
+  tags:   [providers, geography]
+
+- id: ex28
+  question: >
+    List providers whose recorded conditions include “Diabetes”.
+  sql: |
+    SELECT type_1_npi,
+           first_name || ' ' || last_name AS provider_name,
+           conditions
+    FROM   as_providers_v1
+    WHERE  conditions ILIKE '%Diabetes%'
+      AND  conditions IS NOT NULL
+    ORDER  BY provider_name
+    LIMIT  10;
+  tables: [as_providers_v1]
+  tags:   [providers, conditions, diabetes]
+
+- id: ex34
+  question: >
+    List providers with more than 3 affiliated systems.
+  sql: |
+    SELECT type_1_npi,
+           first_name || ' ' || last_name AS provider_name,
+           array_length(string_to_array(system_names, ','),1) AS system_count
+    FROM   as_providers_v1
+    WHERE  system_names IS NOT NULL
+      AND  array_length(string_to_array(system_names, ','),1) > 3
+    ORDER  BY system_count DESC
+    LIMIT  10;
+  tables: [as_providers_v1]
+  tags:   [providers, systems, affiliation]
+
+# === TABLE 3 : as_providers_referrals_v2 ============================
+
+- id: ex5
+  question: >
+    Show the top 5 specialty-pair referral flows (by patient count) in 2024.
+  sql: |
+    SELECT primary_specialty,
+           referring_specialty,
+           SUM(patient_count) AS total_patients
+    FROM   as_providers_referrals_v2
+    WHERE  date BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  date IS NOT NULL
+      AND  patient_count IS NOT NULL
+    GROUP  BY primary_specialty, referring_specialty
+    ORDER  BY total_patients DESC
+    LIMIT  5;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, 2024]
+
+- id: ex6
+  question: >
+    Give monthly totals of all referrals for 2023.
+  sql: |
+    SELECT DATE_TRUNC('month', date) AS month,
+           COUNT(*)                  AS referral_ct
+    FROM   as_providers_referrals_v2
+    WHERE  date BETWEEN '2023-01-01' AND '2023-12-31'
+      AND  date IS NOT NULL
+    GROUP  BY month
+    ORDER  BY month;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, 2023, monthly]
+
+- id: ex29
+  question: >
+    In 2022, what are the top 5 referring specialties to Cardiology?
+  sql: |
+    SELECT referring_specialty,
+           COUNT(*) AS referral_count
+    FROM   as_providers_referrals_v2
+    WHERE  primary_specialty = 'Cardiology'
+      AND  date BETWEEN '2022-01-01' AND '2022-12-31'
+      AND  referring_specialty IS NOT NULL
+    GROUP  BY referring_specialty
+    ORDER  BY referral_count DESC
+    LIMIT  5;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, specialty, 2022]
+
+- id: ex20
+  question: >
+    Which 5 cities generated the most referrals in 2023?
+  sql: |
+    SELECT primary_type_2_npi_city AS city,
+           COUNT(*)                   AS referrals
+    FROM   as_providers_referrals_v2
+    WHERE  date BETWEEN '2023-01-01' AND '2023-12-31'
+      AND  primary_type_2_npi_city IS NOT NULL
+    GROUP  BY city
+    ORDER  BY referrals DESC
+    LIMIT  5;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, cities, 2023]
+
+# === TABLE 4 : diagnosis_and_procedures =============================
+
+- id: ex7
+  question: >
+    List the three most frequent diagnosis codes associated with CPT 99213.
+  sql: |
+    SELECT principal_diagnosis_cd,
+           COUNT(principal_diagnosis_cd) AS freq
+    FROM   diagnosis_and_procedures
+    WHERE  procedure_cd = '99213'
+      AND  principal_diagnosis_cd IS NOT NULL
+    GROUP  BY principal_diagnosis_cd
+    ORDER  BY freq DESC
+    LIMIT  3;
+  tables: [diagnosis_and_procedures]
+  tags:   [diagnosis, procedure]
+
+- id: ex8
+  question: >
+    Top 10 primary HCOs by total claim charge in 2022.
+  sql: |
+    SELECT primary_hco_name,
+           SUM(claim_charge_amt) AS total_charge
+    FROM   diagnosis_and_procedures
+    WHERE  statement_from_dd BETWEEN '2022-01-01' AND '2022-12-31'
+      AND  claim_charge_amt IS NOT NULL
+    GROUP  BY primary_hco_name
+    ORDER  BY total_charge DESC
+    LIMIT  10;
+  tables: [diagnosis_and_procedures]
+  tags:   [costs, 2022]
+
+- id: ex30
+  question: >
+    Compute average claim charge per month for 2023.
+  sql: |
+    SELECT TO_CHAR(service_from_dd, 'YYYY-MM') AS month,
+           AVG(claim_charge_amt)            AS avg_charge
+    FROM   diagnosis_and_procedures
+    WHERE  service_from_dd BETWEEN '2023-01-01' AND '2023-12-31'
+      AND  claim_charge_amt IS NOT NULL
+    GROUP  BY month
+    ORDER  BY month;
+  tables: [diagnosis_and_procedures]
+  tags:   [diagnosis, monthly, 2023]
+
+# === TABLE 5 : fct_pharmacy_clear_claim_allstatus_cluster_brand =====
+
+- id: ex9
+  question: >
+    Show the top 5 payers by number of pharmacy claims in 2024.
+  sql: |
+    SELECT payer_payer_nm   AS payer,
+           COUNT(*)          AS claim_count
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  service_date_dd IS NOT NULL
+    GROUP  BY payer_payer_nm
+    ORDER  BY claim_count DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, payers, 2024]
+
+- id: ex10
+  question: >
+    Compute the average days supply for each drug class in 2024 pharmacy claims.
+  sql: |
+    SELECT ndc_drug_class_nm      AS drug_class,
+           AVG(days_supply_val)    AS avg_days_supply
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  days_supply_val IS NOT NULL
+    GROUP  BY ndc_drug_class_nm
+    ORDER  BY avg_days_supply DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, adherence, 2024]
+
+- id: ex21
+  question: >
+    What are the top 5 drugs by total paid amount in pharmacy claims for 2024?
+  sql: |
+    SELECT ndc_drug_nm      AS drug,
+           SUM(total_paid_amt) AS total_amount
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  total_paid_amt IS NOT NULL
+    GROUP  BY drug
+    ORDER  BY total_amount DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, drugs, 2024, spend]
+
+- id: ex22
+  question: >
+    Show the top 5 payers by total amount paid in 2024 pharmacy claims.
+  sql: |
+    SELECT payer_payer_nm AS payer,
+           SUM(total_paid_amt) AS total_paid
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  total_paid_amt IS NOT NULL
+    GROUP  BY payer_payer_nm
+    ORDER  BY total_paid DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, payers, 2024]
+
+- id: ex31
+  question: >
+    Which 5 drugs had the highest total dispensed quantity in 2024?
+  sql: |
+    SELECT ndc_drug_nm,
+           SUM(dispensed_quantity_val) AS total_dispensed
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  dispensed_quantity_val IS NOT NULL
+    GROUP  BY ndc_drug_nm
+    ORDER  BY total_dispensed DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, drugs, 2024]
+
+# === TABLE 6 : mf_conditions =======================================
+
+- id: ex11
+  question: >
+    List the 10 conditions with the largest clinical trial size.
+  sql: |
+    SELECT display,
+           tcsize
+    FROM   mf_conditions
+    WHERE  tcsize IS NOT NULL
+    ORDER  BY tcsize DESC
+    LIMIT  10;
+  tables: [mf_conditions]
+  tags:   [conditions, size]
+
+- id: ex12
+  question: >
+    How many conditions are recorded for each coding type?
+  sql: |
+    SELECT codingtype       AS type,
+           COUNT(*)          AS count
+    FROM   mf_conditions
+    WHERE  codingtype IS NOT NULL
+    GROUP  BY codingtype
+    ORDER  BY count DESC;
+  tables: [mf_conditions]
+  tags:   [conditions, coding]
+
+- id: ex26
+  question: >
+    List the 5 smallest and 5 largest trial sizes (tcSize) in the condition directory.
+  sql: |
+    (SELECT display, tcsize
+     FROM   mf_conditions
+     WHERE  tcsize IS NOT NULL
+     ORDER  BY tcsize ASC
+     LIMIT  5)
+    UNION ALL
+    (SELECT display, tcsize
+     FROM   mf_conditions
+     WHERE  tcsize IS NOT NULL
+     ORDER  BY tcsize DESC
+     LIMIT  5);
+  tables: [mf_conditions]
+  tags:   [conditions, trial_size]
+
+# === TABLE 7 : mf_providers ========================================
+
+- id: ex13
+  question: >
+    Retrieve the top 20 KOL providers with score above 40.
+  sql: |
+    SELECT npi,
+           name,
+           score,
+           highlyratedconditionscount AS num_conditions
+    FROM   mf_providers
+    WHERE  score > 40
+      AND  score IS NOT NULL
+    ORDER  BY score DESC
+    LIMIT  20;
+  tables: [mf_providers]
+  tags:   [KOL, scores]
+
+- id: ex14
+  question: >
+    Providers who graduated after 2010 and have at least 5 highly-rated conditions.
+  sql: |
+    SELECT npi,
+           name,
+           gradinstitution_year AS grad_year,
+           highlyratedconditionscount
+    FROM   mf_providers
+    WHERE  gradinstitution_year > 2010
+      AND  highlyratedconditionscount >= 5
+      AND  gradinstitution_year IS NOT NULL
+    ORDER  BY highlyratedconditionscount DESC;
+  tables: [mf_providers]
+  tags:   [providers, recent_grads]
+
+- id: ex32
+  question: >
+    What is the average KOL provider score by graduation year (2000–2010)?
+  sql: |
+    SELECT gradinstitution_year AS grad_year,
+           AVG(score)               AS avg_score
+    FROM   mf_providers
+    WHERE  gradinstitution_year BETWEEN 2000 AND 2010
+      AND  score IS NOT NULL
+      AND  gradinstitution_year IS NOT NULL
+    GROUP  BY grad_year
+    ORDER  BY grad_year;
+  tables: [mf_providers]
+  tags:   [KOL, graduation, 2000s]
+
+# === TABLE 8 : mf_scores ===========================================
+
+- id: ex15
+  question: >
+    Which conditions have the highest average provider score (min 5 providers)?
+  sql: |
+    SELECT c.display         AS condition,
+           AVG(s.score)      AS avg_score,
+           COUNT(*)          AS num_providers
+    FROM   mf_scores     AS s
+    JOIN   mf_conditions AS c
+      ON   s.mf_conditions_projectid = c.projectid
+    WHERE  s.score IS NOT NULL
+    GROUP  BY condition
+    HAVING COUNT(*) >= 5
+    ORDER  BY avg_score DESC
+    LIMIT  10;
+  tables: [mf_scores, mf_conditions]
+  tags:   [scores, conditions]
+
+- id: ex16
+  question: >
+    Show the top 20 score entries with score > 50.
+  sql: |
+    SELECT id,
+           mf_providers_npi,
+           score
+    FROM   mf_scores
+    WHERE  score > 50
+      AND  score IS NOT NULL
+    ORDER  BY score DESC
+    LIMIT  20;
+  tables: [mf_scores]
+  tags:   [scores, high]
+
+- id: ex33
+  question: >
+    Which conditions have the most unique providers associated?
+  sql: |
+    SELECT c.display             AS condition,
+           COUNT(DISTINCT s.mf_providers_npi) AS provider_count
+    FROM   mf_scores     AS s
+    JOIN   mf_conditions AS c
+      ON   s.mf_conditions_projectid = c.projectid
+    WHERE  s.mf_providers_npi IS NOT NULL
+    GROUP  BY condition
+    ORDER  BY provider_count DESC
+    LIMIT  10;
+  tables: [mf_scores, mf_conditions]
+  tags:   [conditions, providers, diversity]
+
+# === EXTRA EXAMPLES ex35–ex40 ======================================
+
+- id: ex35
+  question: >
+    Show the total gross due amount by payer in pharmacy claims for 2024.
+  sql: |
+    SELECT payer_payer_nm   AS payer,
+           SUM(gross_due_amt)::numeric(12,2) AS total_gross_due
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  gross_due_amt IS NOT NULL
+    GROUP  BY payer
+    ORDER  BY total_gross_due DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, financials, 2024]
+
+- id: ex36
+  question: >
+    List the top 5 products by number of payments across all years.
+  sql: |
+    SELECT product_name,
+           COUNT(*) AS payment_count
+    FROM   as_lsf_v1
+    WHERE  product_name IS NOT NULL
+    GROUP  BY product_name
+    ORDER  BY payment_count DESC
+    LIMIT  5;
+  tables: [as_lsf_v1]
+  tags:   [payments, products]
+
+- id: ex37
+  question: >
+    Count the number of non-null payments per year.
+  sql: |
+    SELECT year,
+           COUNT(amount) AS payment_count
+    FROM   as_lsf_v1
+    WHERE  amount IS NOT NULL
+    GROUP  BY year
+    ORDER  BY year;
+  tables: [as_lsf_v1]
+  tags:   [payments, time]
+
+- id: ex38
+  question: >
+    List the top 5 hospitals by number of affiliated providers.
+  sql: |
+    SELECT hospital,
+           COUNT(*) AS provider_count
+    FROM   (
+      SELECT UNNEST(STRING_TO_ARRAY(hospital_names, ','))::text AS hospital
+      FROM   as_providers_v1
+      WHERE  hospital_names IS NOT NULL
+    ) AS sub
+    GROUP  BY hospital
+    ORDER  BY provider_count DESC
+    LIMIT  5;
+  tables: [as_providers_v1]
+  tags:   [providers, hospitals]
+
+- id: ex39
+  question: >
+    For each diagnosis code, compute the total claim line charge in 2023.
+  sql: |
+    SELECT diagnosis_code,
+           SUM(total_claim_line_charge)::numeric(12,2) AS total_line_charge
+    FROM   as_providers_referrals_v2
+    WHERE  date BETWEEN '2023-01-01' AND '2023-12-31'
+      AND  total_claim_line_charge IS NOT NULL
+    GROUP  BY diagnosis_code
+    ORDER  BY total_line_charge DESC
+    LIMIT  5;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, costs, 2023]
+
+- id: ex40
+  question: >
+    Which 5 NDC generic names have the highest total paid amount in 2024?
+  sql: |
+    SELECT ndc_generic_nm,
+           SUM(total_paid_amt)::numeric(12,2) AS total_amount
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  ndc_generic_nm IS NOT NULL
+      AND  total_paid_amt IS NOT NULL
+    GROUP  BY ndc_generic_nm
+    ORDER  BY total_amount DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, generic, 2024]
+# -------------------------------------------------------------------
+# === UPDATED EXAMPLES ex41–ex49 ======================================
+
+- id: ex41
+  question: >
+    For each life-science firm, what was their average non-null payment amount across all years?
+  sql: |
+    SELECT life_science_firm_name,
+           AVG(amount)::numeric(12,2) AS avg_payment
+    FROM   as_lsf_v1
+    WHERE  amount IS NOT NULL
+    GROUP  BY life_science_firm_name
+    ORDER  BY avg_payment DESC
+    LIMIT  5;
+  tables: [as_lsf_v1]
+  tags:   [payments, average]
+
+- id: ex42
+  question: >
+    Which 5 providers received the most referrals in 2023?
+  sql: |
+    SELECT p.first_name || ' ' || p.last_name AS provider,
+           COUNT(*)                         AS referrals_received
+    FROM   as_providers_referrals_v2 AS r
+    JOIN   as_providers_v1           AS p
+      ON   r.referring_type_1_npi = p.type_1_npi
+    WHERE  r.date BETWEEN '2023-01-01' AND '2023-12-31'
+      AND  r.referring_type_1_npi IS NOT NULL
+      AND  p.first_name IS NOT NULL
+    GROUP  BY provider
+    ORDER  BY referrals_received DESC
+    LIMIT  5;
+  tables: [as_providers_referrals_v2, as_providers_v1]
+  tags:   [referrals, providers, 2023]
+
+- id: ex43
+  question: >
+    What are the top 5 procedure codes by total patient count?
+  sql: |
+    SELECT procedure_code,
+           SUM(patient_count) AS total_patients
+    FROM   as_providers_referrals_v2
+    WHERE  procedure_code IS NOT NULL
+      AND  patient_count IS NOT NULL
+    GROUP  BY procedure_code
+    ORDER  BY total_patients DESC
+    LIMIT  5;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, procedure]
+
+- id: ex44
+  question: >
+    For each drug class, show the total paid amount and number of claims in 2024.
+  sql: |
+    SELECT ndc_drug_class_nm       AS drug_class,
+           SUM(total_paid_amt)     AS total_paid,
+           COUNT(*)                AS claim_count
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  ndc_drug_class_nm IS NOT NULL
+      AND  total_paid_amt IS NOT NULL
+    GROUP  BY ndc_drug_class_nm
+    ORDER  BY total_paid DESC
+    LIMIT  5;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, summary, 2024]
+
+- id: ex45
+  question: >
+    List providers who are missing an email address.
+  sql: |
+    SELECT type_1_npi,
+           first_name || ' ' || last_name AS provider
+    FROM   as_providers_v1
+    WHERE  email IS NULL
+      AND  first_name IS NOT NULL
+    ORDER  BY provider
+    LIMIT  10;
+  tables: [as_providers_v1]
+  tags:   [providers, missing, contact]
+
+- id: ex46
+  question: >
+    Which conditions have the highest average tcSize for codingType = 'procedure'?
+  sql: |
+    SELECT codingtype,
+           AVG(tcsize)::numeric(12,0) AS avg_tcsize
+    FROM   mf_conditions
+    WHERE  codingtype = 'procedure'
+      AND  tcsize IS NOT NULL
+    GROUP  BY codingtype;
+  tables: [mf_conditions]
+  tags:   [conditions, procedure, average]
+
+- id: ex47
+  question: >
+    Show monthly counts of pharmacy claims by transaction status in 2024.
+  sql: |
+    SELECT TO_CHAR(service_date_dd, 'YYYY-MM') AS month,
+           transaction_status_nm               AS status,
+           COUNT(*)                            AS count
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  service_date_dd BETWEEN '2024-01-01' AND '2024-12-31'
+      AND  transaction_status_nm IS NOT NULL
+    GROUP  BY month, status
+    ORDER  BY month, count DESC
+    LIMIT  10;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, monthly, status]
+
+- id: ex48
+  question: >
+    Identify the top 5 referrals with the largest total_claim_line_charge.
+  sql: |
+    SELECT primary_specialty,
+           referring_specialty,
+           total_claim_line_charge
+    FROM   as_providers_referrals_v2
+    WHERE  total_claim_line_charge IS NOT NULL
+      AND  primary_specialty IS NOT NULL
+      AND  referring_specialty IS NOT NULL
+    ORDER  BY total_claim_line_charge DESC
+    LIMIT  5;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, cost]
+
+- id: ex49
+  question: >
+    For each condition coding type, show how many entries have null display values.
+  sql: |
+    SELECT codingtype,
+           COUNT(*) FILTER (WHERE display IS NULL) AS missing_display
+    FROM   mf_conditions
+    GROUP  BY codingtype;
+  tables: [mf_conditions]
+  tags:   [conditions, missing]
+# -------------------------------------------------------------------
+- id: ex50
+  question: >
+    Which 5 healthcare providers have the longest biographies?
+  sql: |
+    SELECT npi,
+           name,
+           char_length(biography) AS bio_length
+    FROM   mf_providers
+    WHERE  biography IS NOT NULL
+    ORDER  BY bio_length DESC
+    LIMIT  5;
+  tables: [mf_providers]
+  tags:   [providers, biography]
+
+- id: ex51
+  question: >
+    Find me the top Ambulatory Surgical Centers (ASCs) for laparoscopic procedures in Austin, Texas.
+  sql: |
+    SELECT primary_hospital_name        AS asc_name,
+           COUNT(*)                     AS laparoscopy_count
+    FROM   as_providers_referrals_v2
+    WHERE  procedure_code_description ILIKE '%laparoscopic%'
+      AND  primary_hospital_name      ILIKE '%ASC%'
+      AND  primary_type_2_npi_city    = 'Austin'
+      AND  primary_type_2_npi_state   = 'TX'
+    GROUP  BY primary_hospital_name
+    ORDER  BY laparoscopy_count DESC
+    LIMIT  10;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, ASCs, laparoscopic, Austin, TX]
+
+- id: ex52
+  question: >
+    Who are the top prescribers of Ozempic in New York?
+  sql: |
+    SELECT prescriber_npi_nm      AS prescriber,
+           COUNT(*)               AS claim_count
+    FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand
+    WHERE  ndc_generic_nm ILIKE '%OZEMPIC%'
+      AND  prescriber_npi_state_cd = 'NY'
+    GROUP  BY prescriber_npi_nm
+    ORDER  BY claim_count DESC
+    LIMIT  10;
+  tables: [fct_pharmacy_clear_claim_allstatus_cluster_brand]
+  tags:   [pharmacy, prescribers, Ozempic, NY]
+
+- id: ex53
+  question: >
+    Which HCPs performed the most knee arthroplasties in 2023 in California?
+  sql: |
+    SELECT primary_type_2_npi_name AS provider,
+           COUNT(*)               AS arthroplasty_count
+    FROM   as_providers_referrals_v2
+    WHERE  procedure_code_description ILIKE '%arthroplasty%'
+      AND  primary_type_2_npi_state   = 'CA'
+      AND  date BETWEEN '2023-01-01' AND '2023-12-31'
+    GROUP  BY primary_type_2_npi_name
+    ORDER  BY arthroplasty_count DESC
+    LIMIT  10;
+  tables: [as_providers_referrals_v2]
+  tags:   [referrals, arthroplasty, HCPs, CA, 2023]

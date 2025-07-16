@@ -1,0 +1,13 @@
+id: ex8
+question: 'Top 10 primary HCOs by total claim charge in 2022.
+
+  '
+sql: "SELECT primary_hco_name,\n       SUM(claim_charge_amt) AS total_charge\nFROM\
+  \   diagnosis_and_procedures\nWHERE  statement_from_dd BETWEEN '2022-01-01' AND\
+  \ '2022-12-31'\n  AND  claim_charge_amt IS NOT NULL\nGROUP  BY primary_hco_name\n\
+  ORDER  BY total_charge DESC\nLIMIT  10;\n"
+tables:
+- diagnosis_and_procedures
+tags:
+- costs
+- 2022

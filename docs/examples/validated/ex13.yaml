@@ -1,0 +1,12 @@
+id: ex13
+question: 'Retrieve the top 20 KOL providers with score above 40.
+
+  '
+sql: "SELECT npi,\n       name,\n       score,\n       highlyratedconditionscount\
+  \ AS num_conditions\nFROM   mf_providers\nWHERE  score > 40\n  AND  score IS NOT\
+  \ NULL\nORDER  BY score DESC\nLIMIT  20;\n"
+tables:
+- mf_providers
+tags:
+- KOL
+- scores

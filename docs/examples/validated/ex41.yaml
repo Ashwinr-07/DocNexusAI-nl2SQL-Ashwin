@@ -1,0 +1,13 @@
+id: ex41
+question: 'For each life-science firm, what was their average non-null payment amount
+  across all years?
+
+  '
+sql: "SELECT life_science_firm_name,\n       AVG(amount)::numeric(12,2) AS avg_payment\n\
+  FROM   as_lsf_v1\nWHERE  amount IS NOT NULL\nGROUP  BY life_science_firm_name\n\
+  ORDER  BY avg_payment DESC\nLIMIT  5;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- average

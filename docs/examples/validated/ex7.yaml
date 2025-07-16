@@ -1,0 +1,12 @@
+id: ex7
+question: 'List the three most frequent diagnosis codes associated with CPT 99213.
+
+  '
+sql: "SELECT principal_diagnosis_cd,\n       COUNT(principal_diagnosis_cd) AS freq\n\
+  FROM   diagnosis_and_procedures\nWHERE  procedure_cd = '99213'\n  AND  principal_diagnosis_cd\
+  \ IS NOT NULL\nGROUP  BY principal_diagnosis_cd\nORDER  BY freq DESC\nLIMIT  3;\n"
+tables:
+- diagnosis_and_procedures
+tags:
+- diagnosis
+- procedure

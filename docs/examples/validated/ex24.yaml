@@ -1,0 +1,11 @@
+id: ex24
+question: 'Count the number of providers by gender.
+
+  '
+sql: "SELECT gender,\n       COUNT(*) AS count\nFROM   as_providers_v1\nWHERE  gender\
+  \ IS NOT NULL\nGROUP  BY gender\nORDER  BY count DESC;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- demographics

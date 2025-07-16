@@ -1,0 +1,14 @@
+id: ex9
+question: 'Show the top 5 payers by number of pharmacy claims in 2024.
+
+  '
+sql: "SELECT payer_payer_nm   AS payer,\n       COUNT(*)          AS claim_count\n\
+  FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand\nWHERE  service_date_dd\
+  \ BETWEEN '2024-01-01' AND '2024-12-31'\n  AND  service_date_dd IS NOT NULL\nGROUP\
+  \  BY payer_payer_nm\nORDER  BY claim_count DESC\nLIMIT  5;\n"
+tables:
+- fct_pharmacy_clear_claim_allstatus_cluster_brand
+tags:
+- pharmacy
+- payers
+- 2024

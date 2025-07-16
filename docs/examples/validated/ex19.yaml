@@ -1,0 +1,15 @@
+id: ex19
+question: 'List the top 5 HCPs by number of distinct products they received payments
+  for in 2021.
+
+  '
+sql: "SELECT type_1_npi,\n       COUNT(DISTINCT product_name) AS product_variety\n\
+  FROM   as_lsf_v1\nWHERE  year = 2021\n  AND  product_name IS NOT NULL\nGROUP  BY\
+  \ type_1_npi\nORDER  BY product_variety DESC\nLIMIT  5;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- HCP
+- diversity
+- 2021

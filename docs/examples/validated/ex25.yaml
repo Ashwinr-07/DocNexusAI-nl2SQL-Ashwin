@@ -1,0 +1,13 @@
+id: ex25
+question: 'Which 5 U.S. states have the most registered providers?
+
+  '
+sql: "SELECT state,\n       COUNT(*) AS provider_count\nFROM   (\n  SELECT TRIM(s)\
+  \ AS state\n  FROM   as_providers_v1,\n         UNNEST(STRING_TO_ARRAY(states, ','))\
+  \ AS s\n  WHERE  states IS NOT NULL\n) AS sub\nGROUP  BY state\nORDER  BY provider_count\
+  \ DESC\nLIMIT  5;\n"
+tables:
+- as_providers_v1
+tags:
+- providers
+- geography

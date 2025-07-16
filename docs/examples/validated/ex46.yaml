@@ -1,0 +1,13 @@
+id: ex46
+question: 'Which conditions have the highest average tcSize for codingType = ''procedure''?
+
+  '
+sql: "SELECT codingtype,\n       AVG(tcsize)::numeric(12,0) AS avg_tcsize\nFROM  \
+  \ mf_conditions\nWHERE  codingtype = 'procedure'\n  AND  tcsize IS NOT NULL\nGROUP\
+  \  BY codingtype;\n"
+tables:
+- mf_conditions
+tags:
+- conditions
+- procedure
+- average

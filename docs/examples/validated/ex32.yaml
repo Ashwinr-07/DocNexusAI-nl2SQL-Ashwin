@@ -1,0 +1,12 @@
+id: ex32
+question: "What is the average KOL provider score by graduation year (2000\u20132010)?\n"
+sql: "SELECT gradinstitution_year AS grad_year,\n       AVG(score)               AS\
+  \ avg_score\nFROM   mf_providers\nWHERE  gradinstitution_year BETWEEN 2000 AND 2010\n\
+  \  AND  score IS NOT NULL\n  AND  gradinstitution_year IS NOT NULL\nGROUP  BY grad_year\n\
+  ORDER  BY grad_year;\n"
+tables:
+- mf_providers
+tags:
+- KOL
+- graduation
+- 2000s

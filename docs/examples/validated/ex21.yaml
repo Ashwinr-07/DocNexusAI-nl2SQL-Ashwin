@@ -1,0 +1,15 @@
+id: ex21
+question: 'What are the top 5 drugs by total paid amount in pharmacy claims for 2024?
+
+  '
+sql: "SELECT ndc_drug_nm      AS drug,\n       SUM(total_paid_amt) AS total_amount\n\
+  FROM   fct_pharmacy_clear_claim_allstatus_cluster_brand\nWHERE  service_date_dd\
+  \ BETWEEN '2024-01-01' AND '2024-12-31'\n  AND  total_paid_amt IS NOT NULL\nGROUP\
+  \  BY drug\nORDER  BY total_amount DESC\nLIMIT  5;\n"
+tables:
+- fct_pharmacy_clear_claim_allstatus_cluster_brand
+tags:
+- pharmacy
+- drugs
+- 2024
+- spend

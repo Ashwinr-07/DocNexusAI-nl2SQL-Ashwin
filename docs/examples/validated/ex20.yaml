@@ -1,0 +1,14 @@
+id: ex20
+question: 'Which 5 cities generated the most referrals in 2023?
+
+  '
+sql: "SELECT primary_type_2_npi_city AS city,\n       COUNT(*)                   AS\
+  \ referrals\nFROM   as_providers_referrals_v2\nWHERE  date BETWEEN '2023-01-01'\
+  \ AND '2023-12-31'\n  AND  primary_type_2_npi_city IS NOT NULL\nGROUP  BY city\n\
+  ORDER  BY referrals DESC\nLIMIT  5;\n"
+tables:
+- as_providers_referrals_v2
+tags:
+- referrals
+- cities
+- 2023

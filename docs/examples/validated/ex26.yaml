@@ -1,0 +1,13 @@
+id: ex26
+question: 'List the 5 smallest and 5 largest trial sizes (tcSize) in the condition
+  directory.
+
+  '
+sql: "(SELECT display, tcsize\n FROM   mf_conditions\n WHERE  tcsize IS NOT NULL\n\
+  \ ORDER  BY tcsize ASC\n LIMIT  5)\nUNION ALL\n(SELECT display, tcsize\n FROM  \
+  \ mf_conditions\n WHERE  tcsize IS NOT NULL\n ORDER  BY tcsize DESC\n LIMIT  5);\n"
+tables:
+- mf_conditions
+tags:
+- conditions
+- trial_size

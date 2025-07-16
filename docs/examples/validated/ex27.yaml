@@ -1,0 +1,13 @@
+id: ex27
+question: 'For each life-science firm, how many distinct HCPs did they pay in 2019?
+
+  '
+sql: "SELECT life_science_firm_name,\n       COUNT(DISTINCT type_1_npi) AS num_hcps\n\
+  FROM   as_lsf_v1\nWHERE  year = 2019\n  AND  type_1_npi IS NOT NULL\nGROUP  BY life_science_firm_name\n\
+  ORDER  BY num_hcps DESC\nLIMIT  10;\n"
+tables:
+- as_lsf_v1
+tags:
+- payments
+- 2019
+- distinct
