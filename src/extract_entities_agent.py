@@ -6,7 +6,7 @@ import re
 import openai
 
 # ── Hardcoded OpenAI API key ─────────────────────────────────────────────────
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = ""
 
 # Initialize the OpenAI client
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
