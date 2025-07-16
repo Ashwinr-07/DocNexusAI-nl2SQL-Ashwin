@@ -135,7 +135,8 @@ export DB_NAME="health_data_db"
 
 Architecture Diagram
 
-![Uploading image.png…]()
+<img width="951" height="830" alt="image" src="https://github.com/user-attachments/assets/227c59cb-6390-4015-8af6-2892ecaf5e1b" />
+
 
 ---
 
