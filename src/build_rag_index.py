@@ -12,7 +12,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 
 # ── Config ────────────────────────────────────────────────────────
-API_KEY    = "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"
+API_KEY    = ""
 INDEX_PATH = os.path.join(os.path.dirname(__file__), '..', 'vector_store')
 DOCS_GLOB  = os.path.join(os.path.dirname(__file__), '..', 'docs', 'examples', 'validated', 'ex*.yaml')
 # ─────────────────────────────────────────────────────────────────
